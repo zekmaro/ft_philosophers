@@ -6,34 +6,12 @@
 /*   By: anarama <anarama@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 23:39:10 by andrejarama       #+#    #+#             */
-/*   Updated: 2024/07/30 15:35:42 by anarama          ###   ########.fr       */
+/*   Updated: 2024/07/30 21:04:47 by anarama          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-#include "stdio.h"
-
-void	print_input_info(t_data *data)
-{
-	ft_printf("number_of_philosophers %d\n", data->num_of_philo);
-	ft_printf("time_to_die %d\n", data->time_to_die);
-	ft_printf("time_to_eat %d\n", data->time_to_eat);
-	ft_printf("time_to_sleep %d\n", data->time_to_sleep);
-	ft_printf("number_of_times_each_philosopher_must_eat %d\n", data->num_of_times_to_eat);
-}
-
-void	*print_philo(void *arg)
-{
-	t_philo	*philos;
-
-	philos = (t_philo *)arg;
-	printf("%d has taken a fork\n", philos->philo_index);
-	printf("%d is eating\n", philos->philo_index);
-	printf("%d is sleeping\n", philos->philo_index);
-	printf("%d is thinking\n", philos->philo_index);
-	printf("%d died\n", philos->philo_index);
-	return (NULL);
-}
+#include <unistd.h>
 
 void	check_input(int	*var, char *str)
 {
@@ -53,55 +31,113 @@ void	check_input(int	*var, char *str)
 
 void	initialise_data(t_data *data, int argc, char **argv)
 {
-	check_input(&(data->num_of_philo), argv[1]);
+	check_input(&(data->num_of_philos), argv[1]);
 	check_input(&(data->time_to_die), argv[2]);
 	check_input(&(data->time_to_eat), argv[3]);
 	check_input(&(data->time_to_sleep), argv[4]);
 	if (argc == 6)
-		check_input(&(data->num_of_times_to_eat), argv[5]);
+		check_input(&(data->num_meals), argv[5]);
 	else
-		data->num_of_times_to_eat = -1;
+		data->num_meals = -1;
 }
 
-void	start_simulation(pthread_t *threads, t_philo *philos, t_data *data)
+void	stop_simulation()
+{
+	exit(EXIT_FAILURE);
+}
+
+void	*philo_lifecycle(void *arg)
+{
+	t_philo	*philo;
+	int		left_fork;
+	int		right_fork;
+
+	philo = (t_philo *)arg;
+	left_fork = philo->philo_index - 1;
+	right_fork = philo->philo_index % philo->data->num_of_philos;
+	while (1)
+	{
+		if (philo->philo_index % 2 == 0)
+		{
+			pick_up_right_fork(philo, right_fork);
+			pick_up_left_fork(philo, left_fork);
+		}
+		else if (philo->philo_index % 2 == 1)
+		{
+			pick_up_left_fork(philo, left_fork);
+			pick_up_right_fork(philo, right_fork);
+		}
+		philo_eat(philo);
+		put_down_right_fork(philo, right_fork);
+		put_down_left_fork(philo, left_fork);
+		philo_sleep(philo);
+		philo_think(philo);
+		if (philo->time_since_last_meal >= philo->data->time_to_die)
+		{
+			print_action(philo->time_since_last_meal, philo->philo_index, "died");
+			stop_simulation();
+		}
+	}
+	return (NULL);
+}
+
+void	start_simulation(pthread_t *threads, t_philo *philos,
+				t_data *data, pthread_mutex_t *forks)
 {
 	int i;
 
 	i = 0;
-	while (i < data->num_of_philo)
+	while (i < data->num_of_philos)
 	{
-		philos[i].philo_index = i + 1;
-		philos[i].data = data;
-		pthread_create(&threads[i], NULL, print_philo, &philos[i]);
+		pthread_mutex_init(&forks[i], NULL);
 		i++;
 	}
 	i = 0;
-	while (i < data->num_of_philo)
+	while (i < data->num_of_philos)
+	{
+		philos[i].philo_index = i + 1;
+		philos[i].data = data;
+		philos[i].forks = forks;
+		pthread_create(&threads[i], NULL, philo_lifecycle, &philos[i]);
+		i++;
+	}
+	i = 0;
+	while (i < data->num_of_philos)
 	{
 		pthread_join(threads[i], NULL);
 		i++;
 	}
+	i = 0;
+	while (i < data->num_of_philos)
+	{
+		pthread_mutex_destroy(&forks[i]);
+		i++;
+	}
 }
 
-void	initialise_threads_and_philos(pthread_t	**threads, t_philo **philos, t_data *data)
+void	initialise(pthread_t	**threads, t_philo **philos,
+								t_data *data, pthread_mutex_t **forks)
 {
-	*threads = malloc(data->num_of_philo * sizeof(pthread_t));
-	*philos = malloc(data->num_of_philo * sizeof(t_philo));
-	if (!*threads || !*philos)
+	*threads = malloc(data->num_of_philos * sizeof(pthread_t));
+	*philos = malloc(data->num_of_philos * sizeof(t_philo));
+	*forks = malloc(data->num_of_philos * sizeof(pthread_mutex_t));
+	if (!*threads || !*philos || !*forks)
 	{
 		ft_printf("Error allocating memory");
 		exit(EXIT_FAILURE);
 	}
-	ft_memset(*threads, 0, data->num_of_philo * sizeof(pthread_t));
-	ft_memset(*philos, 0, data->num_of_philo * sizeof(t_philo));
+	ft_memset(*threads, 0, data->num_of_philos * sizeof(pthread_t));
+	ft_memset(*philos, 0, data->num_of_philos * sizeof(t_philo));
+	ft_memset(*forks, 0, data->num_of_philos * sizeof(pthread_mutex_t));
 }
 
 int	main(int argc, char **argv)
 {
-	pthread_t	*threads = NULL;
-	t_philo		*philos = NULL;
-	t_data		data;
-	int			i;
+	pthread_t		*threads = NULL;
+	t_philo			*philos = NULL;
+	pthread_mutex_t	*forks = NULL;
+	t_data			data;
+	int				i;
 
 	if (argc < 4 || argc > 6)
 	{
@@ -110,9 +146,10 @@ int	main(int argc, char **argv)
 	i = 0;
 	ft_memset(&data, 0, sizeof(data));
 	initialise_data(&data, argc, argv);
-	initialise_threads_and_philos(&threads, &philos, &data);
+	initialise(&threads, &philos, &data, &forks);
 	print_input_info(&data);
-	start_simulation(threads, philos, &data);
+	start_simulation(threads, philos, &data, forks);
 	free(philos);
 	free(threads);
+	free(forks);
 }
