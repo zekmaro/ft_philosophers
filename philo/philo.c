@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: andrejarama <andrejarama@student.42.fr>    +#+  +:+       +#+        */
+/*   By: anarama <anarama@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 23:39:10 by andrejarama       #+#    #+#             */
-/*   Updated: 2024/07/29 21:09:52 by andrejarama      ###   ########.fr       */
+/*   Updated: 2024/07/30 15:35:42 by anarama          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,14 @@ void	print_input_info(t_data *data)
 
 void	*print_philo(void *arg)
 {
-	pthread_t tid;
+	t_philo	*philos;
 
-	tid = pthread_self();
-	printf("Philo with id: %lu\n", (unsigned long)tid);
+	philos = (t_philo *)arg;
+	printf("%d has taken a fork\n", philos->philo_index);
+	printf("%d is eating\n", philos->philo_index);
+	printf("%d is sleeping\n", philos->philo_index);
+	printf("%d is thinking\n", philos->philo_index);
+	printf("%d died\n", philos->philo_index);
 	return (NULL);
 }
 
@@ -59,37 +63,56 @@ void	initialise_data(t_data *data, int argc, char **argv)
 		data->num_of_times_to_eat = -1;
 }
 
+void	start_simulation(pthread_t *threads, t_philo *philos, t_data *data)
+{
+	int i;
+
+	i = 0;
+	while (i < data->num_of_philo)
+	{
+		philos[i].philo_index = i + 1;
+		philos[i].data = data;
+		pthread_create(&threads[i], NULL, print_philo, &philos[i]);
+		i++;
+	}
+	i = 0;
+	while (i < data->num_of_philo)
+	{
+		pthread_join(threads[i], NULL);
+		i++;
+	}
+}
+
+void	initialise_threads_and_philos(pthread_t	**threads, t_philo **philos, t_data *data)
+{
+	*threads = malloc(data->num_of_philo * sizeof(pthread_t));
+	*philos = malloc(data->num_of_philo * sizeof(t_philo));
+	if (!*threads || !*philos)
+	{
+		ft_printf("Error allocating memory");
+		exit(EXIT_FAILURE);
+	}
+	ft_memset(*threads, 0, data->num_of_philo * sizeof(pthread_t));
+	ft_memset(*philos, 0, data->num_of_philo * sizeof(t_philo));
+}
+
 int	main(int argc, char **argv)
 {
+	pthread_t	*threads = NULL;
+	t_philo		*philos = NULL;
 	t_data		data;
-	pthread_t	*philos;
 	int			i;
 
-	if (argc < 5 || argc > 6)
+	if (argc < 4 || argc > 6)
 	{
 		exit(EXIT_FAILURE);
 	}
 	i = 0;
 	ft_memset(&data, 0, sizeof(data));
 	initialise_data(&data, argc, argv);
+	initialise_threads_and_philos(&threads, &philos, &data);
 	print_input_info(&data);
-	philos = malloc(data.num_of_philo * sizeof(pthread_t));
-	if (!philos)
-	{
-		ft_printf("Error allocating memory");
-		exit(EXIT_FAILURE);
-	}
-	ft_memset(philos, 0, data.num_of_philo * sizeof(pthread_t));
-	while (i < data.num_of_philo)
-	{
-		pthread_create(&philos[i], NULL, print_philo, &data);
-		i++;
-	}
-	i = 0;
-	while (i < data.num_of_philo)
-	{
-		pthread_join(philos[i], NULL);
-		i++;
-	}
+	start_simulation(threads, philos, &data);
 	free(philos);
+	free(threads);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: andrejarama <andrejarama@student.42.fr>    +#+  +:+       +#+        */
+/*   By: anarama <anarama@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 23:45:32 by andrejarama       #+#    #+#             */
-/*   Updated: 2024/07/23 22:16:14 by andrejarama      ###   ########.fr       */
+/*   Updated: 2024/07/30 14:03:53 by anarama          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,15 @@ typedef struct s_data
 	int	time_to_eat;
 	int	time_to_sleep;
 	int	num_of_times_to_eat;
+	int	philo_index;
 	pthread_mutex_t lock;
 }	t_data;
+
+typedef struct s_philo
+{
+	int	philo_index;
+	t_data *data;	
+}	t_philo;
 
 void	*ft_memcpy(void *dest, const void *src, size_t n);
 int		ft_atoi(const char *str);

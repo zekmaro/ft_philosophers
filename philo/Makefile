@@ -1,6 +1,9 @@
 NAME	:= philo
 CC		:= cc
 CFLAGS	:= -Wextra -Wall -fsanitize=thread -g
+
+OBJDIR := obj
+
 SRC		:=	ft_memset.c \
 			ft_atoi.c	\
 			ft_itoa.c	\
@@ -8,8 +11,11 @@ SRC		:=	ft_memset.c \
 			ft_strlen.c \
 			ft_strncmp.c \
 			philo.c
-OBJ		:= $(SRC:.c=.o)
+
+OBJ		:= $(SRC:%.c=$(OBJDIR)/%.o)
 LIBS	:= ft_printf/libftprintf.a 
+
+$(shell mkdir -p $(OBJDIR))
 
 all:	$(NAME)
 
@@ -26,5 +32,8 @@ fclean:
 	rm -f $(OBJ) $(NAME)
 
 re: fclean all
+
+$(OBJDIR)/%.o: %.c
+	$(CC) $(CFLAGS) -c $< -o $@
 
 .PHONY	: all clean fclean re
