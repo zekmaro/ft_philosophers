@@ -6,7 +6,7 @@
 /*   By: andrejarama <andrejarama@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 23:45:32 by andrejarama       #+#    #+#             */
-/*   Updated: 2024/07/07 00:40:58 by andrejarama      ###   ########.fr       */
+/*   Updated: 2024/07/23 22:16:14 by andrejarama      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,11 @@
 
 typedef struct s_data
 {
-	int	num_philo;
-	int	time_die;
-	int	time_eat;
-	int	time_sleep;
-	int	times_to_eat;
+	int	num_of_philo;
+	int	time_to_die;
+	int	time_to_eat;
+	int	time_to_sleep;
+	int	num_of_times_to_eat;
 	pthread_mutex_t lock;
 }	t_data;
 

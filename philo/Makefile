@@ -1,11 +1,12 @@
 NAME	:= philo
 CC		:= cc
-CFLAGS	:= -Wextra -Wall -Werror -g
+CFLAGS	:= -Wextra -Wall -fsanitize=thread -g
 SRC		:=	ft_memset.c \
-			ft_atoi.C	\
+			ft_atoi.c	\
 			ft_itoa.c	\
 			ft_memcpy.c	\
-			ft_strcmp.c \
+			ft_strlen.c \
+			ft_strncmp.c \
 			philo.c
 OBJ		:= $(SRC:.c=.o)
 LIBS	:= ft_printf/libftprintf.a 
