@@ -6,7 +6,7 @@
 /*   By: anarama <anarama@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 23:45:32 by andrejarama       #+#    #+#             */
-/*   Updated: 2024/07/30 20:40:37 by anarama          ###   ########.fr       */
+/*   Updated: 2024/07/30 22:26:57 by anarama          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,16 +21,18 @@
 
 typedef struct s_data
 {
-	int	num_of_philos;
-	int	time_to_die;
-	int	time_to_eat;
-	int	time_to_sleep;
-	int	num_meals;
-	int	philo_index;
+	pthread_mutex_t	print_mutex;
+	int				num_of_philos;
+	int				time_to_die;
+	int				time_to_eat;
+	int				time_to_sleep;
+	int				num_meals;
+	int				philo_index;
 }	t_data;
 
 typedef struct s_philo
 {
+	pthread_mutex_t	*forks;
 	t_data			*data;
 	int				philo_index;
 	int				is_dead;
@@ -40,7 +42,6 @@ typedef struct s_philo
 	int				have_eaten;
 	int				have_slept;
 	int				time_since_last_meal;
-	pthread_mutex_t	*forks;
 }	t_philo;
 
 void	*ft_memcpy(void *dest, const void *src, size_t n);

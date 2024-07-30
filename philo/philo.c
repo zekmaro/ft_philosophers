@@ -6,7 +6,7 @@
 /*   By: anarama <anarama@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 23:39:10 by andrejarama       #+#    #+#             */
-/*   Updated: 2024/07/30 21:04:47 by anarama          ###   ########.fr       */
+/*   Updated: 2024/07/30 22:37:27 by anarama          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void	*philo_lifecycle(void *arg)
 	philo = (t_philo *)arg;
 	left_fork = philo->philo_index - 1;
 	right_fork = philo->philo_index % philo->data->num_of_philos;
-	while (1)
+	while (philo->meals != philo->data->num_meals)
 	{
 		if (philo->philo_index % 2 == 0)
 		{
@@ -74,7 +74,9 @@ void	*philo_lifecycle(void *arg)
 		philo_think(philo);
 		if (philo->time_since_last_meal >= philo->data->time_to_die)
 		{
+			pthread_mutex_lock(&philo->data->print_mutex);
 			print_action(philo->time_since_last_meal, philo->philo_index, "died");
+			pthread_mutex_unlock(&philo->data->print_mutex);
 			stop_simulation();
 		}
 	}
@@ -129,6 +131,7 @@ void	initialise(pthread_t	**threads, t_philo **philos,
 	ft_memset(*threads, 0, data->num_of_philos * sizeof(pthread_t));
 	ft_memset(*philos, 0, data->num_of_philos * sizeof(t_philo));
 	ft_memset(*forks, 0, data->num_of_philos * sizeof(pthread_mutex_t));
+	pthread_mutex_init(&data->print_mutex, NULL);
 }
 
 int	main(int argc, char **argv)
@@ -137,13 +140,11 @@ int	main(int argc, char **argv)
 	t_philo			*philos = NULL;
 	pthread_mutex_t	*forks = NULL;
 	t_data			data;
-	int				i;
 
 	if (argc < 4 || argc > 6)
 	{
 		exit(EXIT_FAILURE);
 	}
-	i = 0;
 	ft_memset(&data, 0, sizeof(data));
 	initialise_data(&data, argc, argv);
 	initialise(&threads, &philos, &data, &forks);
