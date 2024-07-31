@@ -13,7 +13,8 @@ SRC		:=	forks.c \
 			ft_strncmp.c \
 			philo_actions.c \
 			philo.c	\
-			printing.c 
+			printing.c \
+			utils.c
 
 
 OBJ		:= $(SRC:%.c=$(OBJDIR)/%.o)

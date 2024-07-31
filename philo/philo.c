@@ -6,7 +6,7 @@
 /*   By: anarama <anarama@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 23:39:10 by andrejarama       #+#    #+#             */
-/*   Updated: 2024/07/31 15:19:05 by anarama          ###   ########.fr       */
+/*   Updated: 2024/07/31 19:58:25 by anarama          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,53 +48,65 @@ void	stop_simulation()
 
 void	feed_starving_philo(t_philo	*philo, int right_fork, int left_fork)
 {
-	if (philo->philo_index % 2 == 0)
+	if (philo->time_since_last_meal > philo->data->time_to_die / 2)
 	{
-		pick_up_right_fork(philo, right_fork);
-		pick_up_left_fork(philo, left_fork);
+		if (philo->philo_index % 2 == 0)
+		{
+			pick_up_right_fork(philo, right_fork);
+			pick_up_left_fork(philo, left_fork);
+		}
+		else if (philo->philo_index % 2 == 1)
+		{
+			pick_up_left_fork(philo, left_fork);
+			pick_up_right_fork(philo, right_fork);
+		}
+		philo_eat(philo);
+		put_down_right_fork(philo, right_fork);
+		put_down_left_fork(philo, left_fork);
+		philo_sleep(philo);
+		philo_think(philo);
 	}
-	else if (philo->philo_index % 2 == 1)
+}
+
+void	delay_full_philo(t_philo *philo)
+{
+	if (philo->time_since_last_meal <= philo->data->time_to_die / 2)
 	{
-		pick_up_left_fork(philo, left_fork);
-		pick_up_right_fork(philo, right_fork);
+		usleep(philo->data->time_to_sleep / 2 * 1000);
+		philo->time_since_last_meal += philo->data->time_to_sleep / 2;
+		philo->timestamp += philo->data->time_to_sleep / 2;
 	}
-	philo_eat(philo);
-	put_down_right_fork(philo, right_fork);
-	put_down_left_fork(philo, left_fork);
-	philo_sleep(philo);
-	philo_think(philo);
 }
 
 void	*philo_lifecycle(void *arg)
 {
-	t_philo	*philo;
-	int		left_fork;
-	int		right_fork;
+	t_philo			*philo;
+	int				left_fork;
+	int				right_fork;
 
 	philo = (t_philo *)arg;
 	left_fork = philo->philo_index - 1;
 	right_fork = philo->philo_index % philo->data->num_of_philos;
-	while (philo->meals < philo->data->num_meals)
+	get_current_time(&philo->current_time);
+	philo->time0 = philo->current_time;
+	while (1)
 	{
 		get_two_forks(philo, left_fork, right_fork);
 		philo_eat(philo);
+		get_current_time(&philo->current_time);
+		philo->time0 = philo->current_time;
 		put_down_right_fork(philo, right_fork);
 		put_down_left_fork(philo, left_fork);
 		philo_sleep(philo);
 		check_dead(philo);
 		philo_think(philo);
 		check_dead(philo);
-		while (philo->time_since_last_meal > philo->data->time_to_die / 2)
-		{
-			feed_starving_philo(philo, right_fork, left_fork);
-		}
-		if (philo->time_since_last_meal <= philo->data->time_to_die / 2)
-		{
-			usleep(philo->data->time_to_sleep / 2 * 1000);
-			philo->time_since_last_meal += philo->data->time_to_sleep / 2;
-			philo->timestamp += philo->data->time_to_sleep / 2;
-		}
+		feed_starving_philo(philo, right_fork, left_fork);
+		delay_full_philo(philo);
 		check_dead(philo);
+		if (philo->data->num_meals != -1
+		&& philo->meals > philo->data->num_meals)
+			break ;
 	}
 	return (NULL);
 }

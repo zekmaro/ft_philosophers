@@ -6,7 +6,7 @@
 /*   By: anarama <anarama@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 23:45:32 by andrejarama       #+#    #+#             */
-/*   Updated: 2024/07/31 15:17:26 by anarama          ###   ########.fr       */
+/*   Updated: 2024/07/31 19:59:40 by anarama          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <stdlib.h>
 # include <signal.h>
 # include <pthread.h>
+# include <sys/time.h>
 # include "ft_printf/ft_printf.h"
 
 typedef struct s_data
@@ -33,6 +34,9 @@ typedef struct s_data
 typedef struct s_philo
 {
 	pthread_mutex_t	*forks;
+	struct timeval	current_time;
+	struct timeval time0;
+	struct timeval time1;
 	t_data			*data;
 	int				timestamp;
 	int				philo_index;
@@ -60,6 +64,7 @@ void	put_down_left_fork(t_philo *philo, int left_fork);
 void	put_down_right_fork(t_philo *philo, int right_fork);
 
 /*philo_actions.c*/
+void	philo_dead(t_philo *philo);
 void	check_dead(t_philo *philo);
 void	philo_sleep(t_philo *philo);
 void	philo_think(t_philo *philo);
@@ -70,4 +75,6 @@ void	print_input_info(t_data *data);
 void	print_action(int timestamp, int index, char *str);
 
 void	stop_simulation();
+void 	get_current_time(struct timeval *time);
+long	get_elapsed_time(struct timeval *start, struct timeval *end);
 #endif // PHILO_H
