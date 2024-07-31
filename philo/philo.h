@@ -6,7 +6,7 @@
 /*   By: anarama <anarama@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 23:45:32 by andrejarama       #+#    #+#             */
-/*   Updated: 2024/07/30 22:26:57 by anarama          ###   ########.fr       */
+/*   Updated: 2024/07/31 15:17:26 by anarama          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ typedef struct s_philo
 {
 	pthread_mutex_t	*forks;
 	t_data			*data;
+	int				timestamp;
 	int				philo_index;
 	int				is_dead;
 	int				has_left_fork;
@@ -52,12 +53,14 @@ int		ft_strncmp(const char *str1, const char *str2, size_t n);
 size_t	ft_strlen(const char *str);
 
 /*forks.c*/
+void	get_two_forks(t_philo *philo, int left_fork, int right_fork);
 void	pick_up_left_fork(t_philo *philo, int left_fork);
 void	pick_up_right_fork(t_philo *philo, int right_fork);
 void	put_down_left_fork(t_philo *philo, int left_fork);
 void	put_down_right_fork(t_philo *philo, int right_fork);
 
 /*philo_actions.c*/
+void	check_dead(t_philo *philo);
 void	philo_sleep(t_philo *philo);
 void	philo_think(t_philo *philo);
 void	philo_eat(t_philo *philo);
@@ -65,4 +68,6 @@ void	philo_eat(t_philo *philo);
 /*printing.c*/
 void	print_input_info(t_data *data);
 void	print_action(int timestamp, int index, char *str);
+
+void	stop_simulation();
 #endif // PHILO_H
