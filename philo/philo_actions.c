@@ -6,7 +6,7 @@
 /*   By: anarama <anarama@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 20:37:51 by anarama           #+#    #+#             */
-/*   Updated: 2024/07/31 20:03:09 by anarama          ###   ########.fr       */
+/*   Updated: 2024/07/31 21:37:39 by anarama          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,15 +21,15 @@ void	philo_sleep(t_philo *philo)
 	pthread_mutex_lock(&philo->data->print_mutex);
 	print_action(philo->timestamp, philo->philo_index, "is sleeping");
 	pthread_mutex_unlock(&philo->data->print_mutex);
-	while (sleep_time)
-	{
-		usleep(sleep_chunck * 1000);
-		get_current_time(&philo->time1);
-		elapsed_time = get_elapsed_time(&philo->time0, &philo->time1);
-		if (elapsed_time > philo->data->time_to_die)
-			philo_dead(philo);
-		sleep_time -= sleep_chunck;
-	}
+	// while (sleep_time)
+	// {
+	// 	usleep(sleep_chunck * 1000);
+	// 	get_current_time(&philo->time1);
+	// 	elapsed_time = get_elapsed_time(&philo->time0, &philo->time1);
+	// 	if (elapsed_time > philo->data->time_to_die)
+	// 		philo_dead(philo);
+	// 	sleep_time -= sleep_chunck;
+	// }
 	philo->time_since_last_meal += philo->data->time_to_sleep;
 	philo->timestamp += philo->data->time_to_sleep;
 }

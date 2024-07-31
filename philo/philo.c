@@ -6,7 +6,7 @@
 /*   By: anarama <anarama@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 23:39:10 by andrejarama       #+#    #+#             */
-/*   Updated: 2024/07/31 19:58:25 by anarama          ###   ########.fr       */
+/*   Updated: 2024/07/31 21:36:44 by anarama          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,9 +80,9 @@ void	delay_full_philo(t_philo *philo)
 
 void	*philo_lifecycle(void *arg)
 {
-	t_philo			*philo;
-	int				left_fork;
-	int				right_fork;
+	t_philo	*philo;
+	int		left_fork;
+	int		right_fork;
 
 	philo = (t_philo *)arg;
 	left_fork = philo->philo_index - 1;
@@ -93,8 +93,8 @@ void	*philo_lifecycle(void *arg)
 	{
 		get_two_forks(philo, left_fork, right_fork);
 		philo_eat(philo);
-		get_current_time(&philo->current_time);
-		philo->time0 = philo->current_time;
+		// get_current_time(&philo->current_time);
+		// philo->time0 = philo->current_time;
 		put_down_right_fork(philo, right_fork);
 		put_down_left_fork(philo, left_fork);
 		philo_sleep(philo);

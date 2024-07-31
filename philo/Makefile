@@ -16,7 +16,6 @@ SRC		:=	forks.c \
 			printing.c \
 			utils.c
 
-
 OBJ		:= $(SRC:%.c=$(OBJDIR)/%.o)
 LIBS	:= ft_printf/libftprintf.a 
 

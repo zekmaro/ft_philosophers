@@ -6,7 +6,7 @@
 /*   By: anarama <anarama@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 20:35:47 by anarama           #+#    #+#             */
-/*   Updated: 2024/07/31 19:48:39 by anarama          ###   ########.fr       */
+/*   Updated: 2024/07/31 21:37:18 by anarama          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,10 @@ void	get_two_forks(t_philo *philo, int left_fork, int right_fork)
 		pick_up_left_fork(philo, left_fork);
 		pick_up_right_fork(philo, right_fork);
 	}
-	get_current_time(&philo->current_time);
-	philo->time1 = philo->current_time;
-	if (philo->time1.tv_usec - philo->time0.tv_usec > philo->data->time_to_die)
-		philo_dead(philo);
+	// get_current_time(&philo->current_time);
+	// philo->time1 = philo->current_time;
+	// if (philo->time1.tv_usec - philo->time0.tv_usec > philo->data->time_to_die)
+	// 	philo_dead(philo);
 }
 
 void	pick_up_left_fork(t_philo *philo, int left_fork)
