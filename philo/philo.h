@@ -6,7 +6,7 @@
 /*   By: anarama <anarama@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 23:45:32 by andrejarama       #+#    #+#             */
-/*   Updated: 2024/07/31 19:59:40 by anarama          ###   ########.fr       */
+/*   Updated: 2024/08/01 12:53:35 by anarama          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,6 @@ typedef struct s_philo
 	int				has_left_fork;
 	int				has_right_fork;
 	int				meals;
-	int				have_eaten;
-	int				have_slept;
 	int				time_since_last_meal;
 }	t_philo;
 
