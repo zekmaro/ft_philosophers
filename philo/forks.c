@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   forks.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anarama <anarama@student.42.fr>            +#+  +:+       +#+        */
+/*   By: andrejarama <andrejarama@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 20:35:47 by anarama           #+#    #+#             */
-/*   Updated: 2024/08/01 12:51:59 by anarama          ###   ########.fr       */
+/*   Updated: 2024/08/02 11:24:35 by andrejarama      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	get_two_forks(t_philo *philo, int left_fork, int right_fork)
 	long elapsed_time;
 
 	if (philo->meals > 0)
-		philo_think(philo);
+			philo_think(philo);
 	if (philo->philo_index % 2 == 0)
 	{
 		pick_up_right_fork(philo, right_fork);

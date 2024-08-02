@@ -6,7 +6,7 @@
 /*   By: andrejarama <andrejarama@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 17:58:11 by anarama           #+#    #+#             */
-/*   Updated: 2024/07/23 22:24:54 by andrejarama      ###   ########.fr       */
+/*   Updated: 2024/08/01 18:52:05 by andrejarama      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ int	ft_atoi(const char *str)
 	int			num;
 	const char	*temp_str;
 
+	if (str == NULL)
+		return (0);
 	num = 0;
 	temp_str = skip_spaces(str);
 	if (*temp_str == '-' || *temp_str == '+')
