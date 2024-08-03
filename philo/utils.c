@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: andrejarama <andrejarama@student.42.fr>    +#+  +:+       +#+        */
+/*   By: anarama <anarama@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 19:56:36 by anarama           #+#    #+#             */
-/*   Updated: 2024/08/02 11:19:33 by andrejarama      ###   ########.fr       */
+/*   Updated: 2024/08/04 00:26:38 by anarama          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,12 @@ long	get_elapsed_time(struct timeval *start, struct timeval *end)
 
 void	philo_dead(t_philo *philo)
 {
-	pthread_mutex_lock(&philo->data->print_mutex);
-	print_action(philo->timestamp, philo->philo_index, "died");
-	pthread_mutex_unlock(&philo->data->print_mutex);
+	pthread_mutex_lock(&philo->data->stop_mutex);
+	if (philo->data->stop_simulation == 0)
+	{
+		print_action(philo, "died");
+	}
+	pthread_mutex_unlock(&philo->data->stop_mutex);
 	stop_simulation();
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: andrejarama <andrejarama@student.42.fr>    +#+  +:+       +#+        */
+/*   By: anarama <anarama@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 23:45:32 by andrejarama       #+#    #+#             */
-/*   Updated: 2024/08/02 11:19:03 by andrejarama      ###   ########.fr       */
+/*   Updated: 2024/08/04 00:04:15 by anarama          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@
 typedef struct s_data
 {
 	pthread_mutex_t	print_mutex;
+	pthread_mutex_t	stop_mutex;
+	volatile int	stop_simulation;
 	int				num_of_philos;
 	int				time_to_die;
 	int				time_to_eat;
@@ -71,7 +73,7 @@ void	philo_eat(t_philo *philo);
 
 /*printing.c*/
 void	print_input_info(t_data *data);
-void	print_action(int timestamp, int index, char *str);
+void	print_action(t_philo *philo, char *str);
 
 void	stop_simulation();
 void 	get_current_time(struct timeval *time);

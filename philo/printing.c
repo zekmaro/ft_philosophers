@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   printing.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: andrejarama <andrejarama@student.42.fr>    +#+  +:+       +#+        */
+/*   By: anarama <anarama@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 20:36:34 by anarama           #+#    #+#             */
-/*   Updated: 2024/08/02 11:19:22 by andrejarama      ###   ########.fr       */
+/*   Updated: 2024/08/04 00:25:17 by anarama          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,11 @@ void	print_input_info(t_data *data)
 		data->num_meals);
 }
 
-void	print_action(int timestamp, int index, char *str)
+void	print_action(t_philo *philo, char *str)
 {
-	printf("%d %d %s\n", timestamp, index, str);
+	pthread_mutex_lock(&philo->data->print_mutex);
+	{
+		printf("%d %d %s\n", philo->timestamp, philo->philo_index, str);	
+	}
+	pthread_mutex_unlock(&philo->data->print_mutex);
 }

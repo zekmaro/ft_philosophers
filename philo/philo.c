@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: andrejarama <andrejarama@student.42.fr>    +#+  +:+       +#+        */
+/*   By: anarama <anarama@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 23:39:10 by andrejarama       #+#    #+#             */
-/*   Updated: 2024/08/01 20:02:38 by andrejarama      ###   ########.fr       */
+/*   Updated: 2024/08/04 00:06:32 by anarama          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,6 +156,7 @@ void	initialise(pthread_t	**threads, t_philo **philos,
 	ft_memset(*philos, 0, data->num_of_philos * sizeof(t_philo));
 	ft_memset(*forks, 0, data->num_of_philos * sizeof(pthread_mutex_t));
 	pthread_mutex_init(&data->print_mutex, NULL);
+	pthread_mutex_init(&data->stop_mutex, NULL);
 }
 
 int	main(int argc, char **argv)

@@ -3,24 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   philo_actions.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: andrejarama <andrejarama@student.42.fr>    +#+  +:+       +#+        */
+/*   By: anarama <anarama@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 20:37:51 by anarama           #+#    #+#             */
-/*   Updated: 2024/08/02 11:19:12 by andrejarama      ###   ########.fr       */
+/*   Updated: 2024/08/04 00:42:11 by anarama          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	philo_sleep(t_philo *philo)
+void	custom_usleep(int sleep_chunck, int	sleep_time, t_philo *philo)
 {
 	long elapsed_time;
-	int sleep_chunck = 10;
-	int	sleep_time = philo->data->time_to_sleep;
 
-	pthread_mutex_lock(&philo->data->print_mutex);
-	print_action(philo->timestamp, philo->philo_index, "is sleeping");
-	pthread_mutex_unlock(&philo->data->print_mutex);
 	while (sleep_time)
 	{
 		usleep(sleep_chunck * 1000);
@@ -30,23 +25,29 @@ void	philo_sleep(t_philo *philo)
 			philo_dead(philo);
 		sleep_time -= sleep_chunck;
 	}
+}
+
+void	philo_sleep(t_philo *philo)
+{
+	int sleep_chunck = 10;
+	int	sleep_time = philo->data->time_to_sleep;
+
+	print_action(philo, "is sleeping");
+	custom_usleep(sleep_chunck, sleep_time, philo);
 	philo->time_since_last_meal += philo->data->time_to_sleep;
 	philo->timestamp += philo->data->time_to_sleep;
 }
 
 void	philo_think(t_philo *philo)
 {
-	pthread_mutex_lock(&philo->data->print_mutex);
-	print_action(philo->timestamp, philo->philo_index, "is thinking");
-	pthread_mutex_unlock(&philo->data->print_mutex);
+	print_action(philo, "is thinking");
 }
 
 void	philo_eat(t_philo *philo)
 {
-	pthread_mutex_lock(&philo->data->print_mutex);
-	print_action(philo->timestamp, philo->philo_index, "is eating");
-	pthread_mutex_unlock(&philo->data->print_mutex);
-	usleep(philo->data->time_to_eat * 1000);
+	print_action(philo, "is eating");
+	usleep(philo->data->time_to_sleep * 1000);
+	//custom_usleep(10, philo->data->time_to_sleep, philo);
 	philo->timestamp += philo->data->time_to_eat;
 	philo->time_since_last_meal = 0;
 	philo->meals++;
