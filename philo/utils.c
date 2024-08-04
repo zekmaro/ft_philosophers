@@ -6,7 +6,7 @@
 /*   By: anarama <anarama@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 19:56:36 by anarama           #+#    #+#             */
-/*   Updated: 2024/08/04 00:26:38 by anarama          ###   ########.fr       */
+/*   Updated: 2024/08/04 19:36:41 by anarama          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ void	philo_dead(t_philo *philo)
 	if (philo->data->stop_simulation == 0)
 	{
 		print_action(philo, "died");
+		philo->data->stop_simulation = 1;
 	}
 	pthread_mutex_unlock(&philo->data->stop_mutex);
 	stop_simulation();

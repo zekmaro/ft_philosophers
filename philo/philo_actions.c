@@ -6,7 +6,7 @@
 /*   By: anarama <anarama@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 20:37:51 by anarama           #+#    #+#             */
-/*   Updated: 2024/08/04 00:42:11 by anarama          ###   ########.fr       */
+/*   Updated: 2024/08/04 19:28:53 by anarama          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,7 @@ void	philo_think(t_philo *philo)
 void	philo_eat(t_philo *philo)
 {
 	print_action(philo, "is eating");
-	usleep(philo->data->time_to_sleep * 1000);
-	//custom_usleep(10, philo->data->time_to_sleep, philo);
+	usleep(philo->data->time_to_eat * 1000);
 	philo->timestamp += philo->data->time_to_eat;
 	philo->time_since_last_meal = 0;
 	philo->meals++;

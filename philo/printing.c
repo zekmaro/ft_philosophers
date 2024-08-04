@@ -6,7 +6,7 @@
 /*   By: anarama <anarama@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 20:36:34 by anarama           #+#    #+#             */
-/*   Updated: 2024/08/04 00:25:17 by anarama          ###   ########.fr       */
+/*   Updated: 2024/08/04 19:38:53 by anarama          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,9 @@ void	print_input_info(t_data *data)
 void	print_action(t_philo *philo, char *str)
 {
 	pthread_mutex_lock(&philo->data->print_mutex);
+	if (philo->data->stop_simulation == 0)
 	{
-		printf("%d %d %s\n", philo->timestamp, philo->philo_index, str);	
+		printf("%d %d %s\n", philo->timestamp, philo->philo_index, str);
 	}
 	pthread_mutex_unlock(&philo->data->print_mutex);
 }

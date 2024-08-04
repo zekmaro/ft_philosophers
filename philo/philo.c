@@ -6,7 +6,7 @@
 /*   By: anarama <anarama@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 23:39:10 by andrejarama       #+#    #+#             */
-/*   Updated: 2024/08/04 00:06:32 by anarama          ###   ########.fr       */
+/*   Updated: 2024/08/04 19:27:36 by anarama          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,8 +97,8 @@ void	*philo_lifecycle(void *arg)
 		put_down_left_fork(philo, left_fork);
 		philo_sleep(philo);
 		check_dead(philo);
-		feed_starving_philo(philo, right_fork, left_fork);
 		delay_full_philo(philo);
+		feed_starving_philo(philo, right_fork, left_fork);
 		check_dead(philo);
 		if (philo->data->num_meals != -1
 		&& philo->meals >= philo->data->num_meals)
