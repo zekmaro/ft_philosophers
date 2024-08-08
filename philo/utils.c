@@ -6,7 +6,7 @@
 /*   By: anarama <anarama@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 19:56:36 by anarama           #+#    #+#             */
-/*   Updated: 2024/08/04 19:36:41 by anarama          ###   ########.fr       */
+/*   Updated: 2024/08/08 22:39:10 by anarama          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,12 @@ long	get_elapsed_time(struct timeval *start, struct timeval *end)
 
 void	philo_dead(t_philo *philo)
 {
-	pthread_mutex_lock(&philo->data->stop_mutex);
-	if (philo->data->stop_simulation == 0)
+	if (save_get_value(&philo->data->stop_mutex,
+			philo->data->stop_simulation) == 0)
 	{
-		print_action(philo, "died");
-		philo->data->stop_simulation = 1;
+		save_print_action(philo, "died");
+		save_set_value(&philo->data->stop_mutex, &philo->data->stop_simulation, 1);
 	}
-	pthread_mutex_unlock(&philo->data->stop_mutex);
 	stop_simulation();
 }
 

@@ -6,7 +6,7 @@
 /*   By: anarama <anarama@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 20:36:34 by anarama           #+#    #+#             */
-/*   Updated: 2024/08/04 19:38:53 by anarama          ###   ########.fr       */
+/*   Updated: 2024/08/08 22:19:03 by anarama          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	print_input_info(t_data *data)
 		data->num_meals);
 }
 
-void	print_action(t_philo *philo, char *str)
+void	save_print_action(t_philo *philo, char *str)
 {
 	pthread_mutex_lock(&philo->data->print_mutex);
 	if (philo->data->stop_simulation == 0)

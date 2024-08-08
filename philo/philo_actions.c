@@ -6,13 +6,13 @@
 /*   By: anarama <anarama@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 20:37:51 by anarama           #+#    #+#             */
-/*   Updated: 2024/08/04 19:28:53 by anarama          ###   ########.fr       */
+/*   Updated: 2024/08/08 22:34:53 by anarama          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	custom_usleep(int sleep_chunck, int	sleep_time, t_philo *philo)
+void	custom_usleep(t_philo *philo, int sleep_chunck, int	sleep_time)
 {
 	long elapsed_time;
 
@@ -32,20 +32,20 @@ void	philo_sleep(t_philo *philo)
 	int sleep_chunck = 10;
 	int	sleep_time = philo->data->time_to_sleep;
 
-	print_action(philo, "is sleeping");
-	custom_usleep(sleep_chunck, sleep_time, philo);
+	save_print_action(philo, "is sleeping");
+	custom_usleep(philo, sleep_chunck, sleep_time);
 	philo->time_since_last_meal += philo->data->time_to_sleep;
 	philo->timestamp += philo->data->time_to_sleep;
 }
 
 void	philo_think(t_philo *philo)
 {
-	print_action(philo, "is thinking");
+	save_print_action(philo, "is thinking");
 }
 
 void	philo_eat(t_philo *philo)
 {
-	print_action(philo, "is eating");
+	save_print_action(philo, "is eating");
 	usleep(philo->data->time_to_eat * 1000);
 	philo->timestamp += philo->data->time_to_eat;
 	philo->time_since_last_meal = 0;
