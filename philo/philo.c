@@ -6,7 +6,7 @@
 /*   By: anarama <anarama@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 23:39:10 by andrejarama       #+#    #+#             */
-/*   Updated: 2024/08/08 22:49:02 by anarama          ###   ########.fr       */
+/*   Updated: 2024/08/09 15:20:43 by anarama          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,17 +15,21 @@
 void	start_simulation(pthread_t *threads, t_philo *philos,
 				t_data *data, pthread_mutex_t *forks)
 {
+	pthread_t monitor_thread;
+
 	initialise_mutexes(data, forks);
+	safe_handle_thread(&monitor_thread, monitor_philos, philos, CREATE);
 	create_threads(data, philos, threads, forks);
 	join_threads(data, threads);
+	safe_handle_thread(&monitor_thread, NULL, NULL, JOIN);
 	destroy_mutexes(data, forks);
 }
 
 int	main(int argc, char **argv)
 {
+	pthread_mutex_t	*forks = NULL;
 	pthread_t		*threads = NULL;
 	t_philo			*philos = NULL;
-	pthread_mutex_t	*forks = NULL;
 	t_data			data;
 
 	if (argc < 4 || argc > 6)
