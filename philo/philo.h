@@ -6,7 +6,7 @@
 /*   By: anarama <anarama@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 23:45:32 by andrejarama       #+#    #+#             */
-/*   Updated: 2024/08/08 22:59:55 by anarama          ###   ########.fr       */
+/*   Updated: 2024/08/09 12:36:08 by anarama          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,6 +120,6 @@ void	initialise_data(t_data *data, int argc, char **argv);
 
 /* Save get and set */
 void	save_set_value(pthread_mutex_t *mutex, int *value, int new_value);
-int		save_get_value(pthread_mutex_t *mutex, int value);
+int		save_get_value(pthread_mutex_t *mutex, int *value);
 
 #endif // PHILO_H
