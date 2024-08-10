@@ -6,7 +6,7 @@
 /*   By: anarama <anarama@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 19:56:36 by anarama           #+#    #+#             */
-/*   Updated: 2024/08/09 12:36:18 by anarama          ###   ########.fr       */
+/*   Updated: 2024/08/10 18:37:43 by anarama          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,14 @@ void	philo_dead(t_philo *philo)
 	stop_simulation();
 }
 
-void	check_dead(t_philo *philo)
+int	check_dead(t_philo *philo)
 {
 	if (philo->time_since_last_meal >= philo->data->time_to_die)
 	{
 		philo_dead(philo);
+		return (1);
 	}
+	return (0);
 }
 
 void get_current_time(struct timeval *time) 

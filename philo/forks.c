@@ -6,7 +6,7 @@
 /*   By: anarama <anarama@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 20:35:47 by anarama           #+#    #+#             */
-/*   Updated: 2024/08/08 22:23:24 by anarama          ###   ########.fr       */
+/*   Updated: 2024/08/10 18:34:51 by anarama          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,12 +50,10 @@ void	put_down_left_fork(t_philo *philo, int left_fork)
 {
 	safe_handle_mutex(&philo->forks[left_fork], UNLOCK);
 	save_print_action(philo, "has put left fork down");
-	philo->has_left_fork = 0;
 }
 
 void	put_down_right_fork(t_philo *philo, int right_fork)
 {
 	safe_handle_mutex(&philo->forks[right_fork], UNLOCK);
 	save_print_action(philo, "has put right fork down");
-	philo->has_right_fork = 0;
 }

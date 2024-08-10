@@ -6,7 +6,7 @@
 /*   By: anarama <anarama@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 23:45:32 by andrejarama       #+#    #+#             */
-/*   Updated: 2024/08/09 15:18:11 by anarama          ###   ########.fr       */
+/*   Updated: 2024/08/10 18:49:13 by anarama          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ typedef struct s_data
 	pthread_mutex_t	print_mutex;
 	pthread_mutex_t	stop_mutex;
 	int				stop_simulation;
+	int				all_philos_ready;
 	int				num_of_philos;
 	int				time_to_die;
 	int				time_to_eat;
@@ -55,6 +56,8 @@ typedef struct s_data
 typedef struct s_philo
 {
 	pthread_mutex_t	*forks;
+	// pthread_mutex_t	time_mutex;
+	// pthread_mutex_t	eat_mutex;
 	struct timeval	current_time;
 	struct timeval	time0;
 	struct timeval	time1;
@@ -62,11 +65,28 @@ typedef struct s_philo
 	int				timestamp;
 	int				philo_index;
 	int				is_dead;
+	int				is_ready;
 	int				has_left_fork;
 	int				has_right_fork;
 	int				meals;
 	int				time_since_last_meal;
 }	t_philo;
+
+enum e_alloc
+{
+	ADD,
+	CLEAN,
+	END,
+	FREE,
+};
+
+typedef struct s_clean
+{
+	void			*content;
+	void			(*clean)(void *del);
+	struct s_clean	*next;
+}					t_clean;
+
 
 void	*ft_calloc(size_t num, size_t size);
 void	*ft_memcpy(void *dest, const void *src, size_t n);
@@ -86,7 +106,7 @@ void	put_down_right_fork(t_philo *philo, int right_fork);
 
 /* Philo_actions */
 void	philo_dead(t_philo *philo);
-void	check_dead(t_philo *philo);
+int	check_dead(t_philo *philo);
 void	philo_sleep(t_philo *philo);
 void	philo_think(t_philo *philo);
 void	philo_eat(t_philo *philo);
@@ -124,4 +144,8 @@ int		save_get_value(pthread_mutex_t *mutex, int *value);
 
 
 void	*monitor_philos(void *arg);
+
+void	lst_memory(void *mem, void (*del)(void *c), int mode);
+
+void	update_time_since_last_meal(t_philo *philo);
 #endif // PHILO_H
