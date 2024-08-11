@@ -6,7 +6,7 @@
 /*   By: anarama <anarama@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/08 22:14:11 by anarama           #+#    #+#             */
-/*   Updated: 2024/08/10 18:36:57 by anarama          ###   ########.fr       */
+/*   Updated: 2024/08/11 15:27:49 by anarama          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,22 +17,23 @@ void	stop_simulation()
 	exit(EXIT_FAILURE);
 }
 
-void	delay_full_philo(t_philo *philo)
-{
-	if (philo->time_since_last_meal <= philo->data->time_to_die / 2)
-	{
-		usleep(philo->data->time_to_sleep / 2 * 1000);
-		philo->time_since_last_meal += philo->data->time_to_sleep / 2;
-		philo->timestamp += philo->data->time_to_sleep / 2;
-	}
-}
-
 void	wait_for_all_philos(t_philo	*philo)
 {
 	while (save_get_value(&philo->data->stop_mutex,
 		&philo->data->all_philos_ready) != 1)
 	{
 		usleep(10 * 1000);
+	}
+}
+
+void	handle_single_philo(t_philo	*philo, int	left_fork)
+{
+	if (philo->data->num_of_philos == 1)
+	{
+		pick_up_left_fork(philo, left_fork);
+		usleep(philo->data->time_to_die * 1000);
+		update_time_since_last_meal(philo);
+		philo->timestamp += philo->data->time_to_die;
 	}
 }
 
@@ -48,23 +49,16 @@ void	*philo_lifecycle(void *arg)
 	save_set_value(&philo->data->stop_mutex, &philo->is_ready, 1);
 	wait_for_all_philos(philo);
 	get_current_time(&philo->time0);
+	handle_single_philo(philo, left_fork);
 	while (1)
 	{
 		get_two_forks(philo, left_fork, right_fork);
 		philo_eat(philo);
-		get_current_time(&philo->time0);
 		put_down_right_fork(philo, right_fork);
 		put_down_left_fork(philo, left_fork);
 		philo_sleep(philo);
-		check_dead(philo);
-		delay_full_philo(philo);
-		// if (philo->time_since_last_meal > philo->data->time_to_die / 2)
-		// {
-		// 	continue ; 
-		// }
-		check_dead(philo);
-		if (philo->data->num_meals != -1
-		&& philo->meals >= philo->data->num_meals)
+		if (save_get_value(&philo->data->stop_mutex,
+					&philo->data->stop_simulation) == 1)
 			break ;
 	}
 	return (NULL);
