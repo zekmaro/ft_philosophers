@@ -6,7 +6,7 @@
 /*   By: anarama <anarama@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 23:45:32 by andrejarama       #+#    #+#             */
-/*   Updated: 2024/08/10 18:49:13 by anarama          ###   ########.fr       */
+/*   Updated: 2024/08/12 16:16:31 by anarama          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ typedef struct s_data
 {
 	pthread_mutex_t	print_mutex;
 	pthread_mutex_t	stop_mutex;
+	struct timeval	current_time;
 	int				stop_simulation;
 	int				all_philos_ready;
 	int				num_of_philos;
@@ -58,7 +59,7 @@ typedef struct s_philo
 	pthread_mutex_t	*forks;
 	// pthread_mutex_t	time_mutex;
 	// pthread_mutex_t	eat_mutex;
-	struct timeval	current_time;
+	struct timeval	simulation_start;
 	struct timeval	time0;
 	struct timeval	time1;
 	t_data			*data;
@@ -113,7 +114,7 @@ void	philo_eat(t_philo *philo);
 
 /* Printing */
 void	print_input_info(t_data *data);
-void	save_print_action(t_philo *philo, char *str);
+void	save_print_action(t_philo *philo, const char *str);
 
 void	stop_simulation();
 void 	get_current_time(struct timeval *time);

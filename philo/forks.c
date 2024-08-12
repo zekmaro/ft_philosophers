@@ -6,7 +6,7 @@
 /*   By: anarama <anarama@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 20:35:47 by anarama           #+#    #+#             */
-/*   Updated: 2024/08/11 12:52:03 by anarama          ###   ########.fr       */
+/*   Updated: 2024/08/12 15:37:29 by anarama          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,8 @@
 
 void	get_two_forks(t_philo *philo, int left_fork, int right_fork)
 {
-	long elapsed_time;
-
 	if (philo->meals > 0)
 		philo_think(philo);
-	update_time_since_last_meal(philo);
 	if (philo->philo_index % 2 == 0)
 	{
 		pick_up_right_fork(philo, right_fork);

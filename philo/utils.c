@@ -6,7 +6,7 @@
 /*   By: anarama <anarama@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 19:56:36 by anarama           #+#    #+#             */
-/*   Updated: 2024/08/11 12:46:53 by anarama          ###   ########.fr       */
+/*   Updated: 2024/08/12 15:41:51 by anarama          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,4 +21,5 @@ long	get_elapsed_time(struct timeval *start, struct timeval *end)
 void get_current_time(struct timeval *time) 
 {
     gettimeofday(time, NULL);
+	//write protection
 }
