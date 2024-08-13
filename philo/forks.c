@@ -6,7 +6,7 @@
 /*   By: anarama <anarama@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 20:35:47 by anarama           #+#    #+#             */
-/*   Updated: 2024/08/12 15:37:29 by anarama          ###   ########.fr       */
+/*   Updated: 2024/08/13 17:25:45 by anarama          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,23 +35,23 @@ void	get_two_forks(t_philo *philo, int left_fork, int right_fork)
 void	pick_up_left_fork(t_philo *philo, int left_fork)
 {
 	safe_handle_mutex(&philo->forks[left_fork], LOCK);
-	save_print_action(philo, "has taken left fork");
+	save_print_action(philo, "has taken a fork");
 }
 
 void	pick_up_right_fork(t_philo *philo, int right_fork)
 {
 	safe_handle_mutex(&philo->forks[right_fork], LOCK);
-	save_print_action(philo, "has taken right fork");
+	save_print_action(philo, "has taken a fork");
 }
 
 void	put_down_left_fork(t_philo *philo, int left_fork)
 {
 	safe_handle_mutex(&philo->forks[left_fork], UNLOCK);
-	save_print_action(philo, "has put left fork down");
+	//save_print_action(philo, "has put left fork down");
 }
 
 void	put_down_right_fork(t_philo *philo, int right_fork)
 {
 	safe_handle_mutex(&philo->forks[right_fork], UNLOCK);
-	save_print_action(philo, "has put right fork down");
+	//save_print_action(philo, "has put right fork down");
 }

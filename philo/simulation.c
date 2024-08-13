@@ -6,7 +6,7 @@
 /*   By: anarama <anarama@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/08 22:14:11 by anarama           #+#    #+#             */
-/*   Updated: 2024/08/12 15:40:31 by anarama          ###   ########.fr       */
+/*   Updated: 2024/08/13 17:40:09 by anarama          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 void	stop_simulation()
 {
+	//lst_memory(NULL, NULL, CLEAN);
 	exit(EXIT_FAILURE);
 }
 

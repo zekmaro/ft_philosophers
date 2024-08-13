@@ -6,12 +6,11 @@
 /*   By: anarama <anarama@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 15:14:53 by anarama           #+#    #+#             */
-/*   Updated: 2024/08/12 16:24:18 by anarama          ###   ########.fr       */
+/*   Updated: 2024/08/13 17:43:02 by anarama          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-#include <sys/time.h>
 
 void	philo_dead(t_philo *philo)
 {
@@ -56,8 +55,6 @@ void	*monitor_philos(void *arg)
 		num_ready_philos++;
 		i++;
 	}
-	// int sleep_delay = 1000;
-	// long time_left;
 	save_set_value(&philos->data->stop_mutex, &philos->data->all_philos_ready, 1);
 	while(1)
 	{
@@ -70,14 +67,11 @@ void	*monitor_philos(void *arg)
 			&& save_get_value(&philos->data->stop_mutex, &philos[i].meals)
 			>= philos->data->num_meals)
 				num_full_philos++;
-			// time_left = philos->data->time_to_die - get_elapsed_time(&philos[i].simulation_start, &philos->data->current_time);
-			// if (time_left < 10)
-			// 	sleep_delay = 0;
 			i++;
 		}
 		if (num_full_philos == philos->data->num_of_philos)
 			break ;
-		// usleep(sleep_delay);
+		usleep(10);
 	}
 	save_set_value(&philos->data->stop_mutex, &philos->data->stop_simulation, 1);
 	return (NULL);

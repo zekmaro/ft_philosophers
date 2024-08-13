@@ -6,7 +6,7 @@
 /*   By: anarama <anarama@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 20:37:51 by anarama           #+#    #+#             */
-/*   Updated: 2024/08/12 16:06:07 by anarama          ###   ########.fr       */
+/*   Updated: 2024/08/13 17:46:53 by anarama          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,10 +53,9 @@ void	philo_eat(t_philo *philo)
 {
 	int	save_num_meals;
 
-	save_print_action(philo, "is eating");
-	save_set_value(&philo->data->stop_mutex,
-		&philo->time_since_last_meal, 0);
+	check_dead(philo);
 	get_current_time(&philo->time0);
+	save_print_action(philo, "is eating");
 	usleep(philo->data->time_to_eat * 1000);
 	save_set_value(&philo->data->stop_mutex,
 		&philo->time_since_last_meal, 0);
