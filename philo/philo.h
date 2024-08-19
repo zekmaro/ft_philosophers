@@ -6,7 +6,7 @@
 /*   By: anarama <anarama@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 23:45:32 by andrejarama       #+#    #+#             */
-/*   Updated: 2024/08/13 17:18:12 by anarama          ###   ########.fr       */
+/*   Updated: 2024/08/19 16:29:56 by anarama          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ typedef struct s_data
 {
 	pthread_mutex_t	print_mutex;
 	pthread_mutex_t	stop_mutex;
-	struct timeval	current_time;
 	int				stop_simulation;
 	int				all_philos_ready;
 	int				num_of_philos;
@@ -51,14 +50,11 @@ typedef struct s_data
 	int				time_to_eat;
 	int				time_to_sleep;
 	int				num_meals;
-	int				philo_index;
 }	t_data;
 
 typedef struct s_philo
 {
 	pthread_mutex_t	*forks;
-	// pthread_mutex_t	time_mutex;
-	// pthread_mutex_t	eat_mutex;
 	struct timeval	simulation_start;
 	struct timeval	time0;
 	struct timeval	time1;
@@ -67,27 +63,9 @@ typedef struct s_philo
 	int				philo_index;
 	int				is_dead;
 	int				is_ready;
-	int				has_left_fork;
-	int				has_right_fork;
 	int				meals;
 	int				time_since_last_meal;
 }	t_philo;
-
-enum e_alloc
-{
-	ADD,
-	CLEAN,
-	END,
-	FREE,
-};
-
-typedef struct s_clean
-{
-	void			*content;
-	void			(*clean)(void *del);
-	struct s_clean	*next;
-}					t_clean;
-
 
 void	*ft_calloc(size_t num, size_t size);
 void	*ft_memcpy(void *dest, const void *src, size_t n);

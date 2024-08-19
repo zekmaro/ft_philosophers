@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   initialisations.c                                  :+:      :+:    :+:   */
+/*   main_functionality.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: anarama <anarama@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/08 21:52:33 by anarama           #+#    #+#             */
-/*   Updated: 2024/08/08 21:59:37 by anarama          ###   ########.fr       */
+/*   Updated: 2024/08/19 15:40:24 by anarama          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,8 @@ void	destroy_mutexes(t_data *data, pthread_mutex_t *forks)
 	int i;
 
 	i = 0;
+	safe_handle_mutex(&data->print_mutex, DESTROY);
+	safe_handle_mutex(&data->stop_mutex, DESTROY);
 	while (i < data->num_of_philos)
 	{
 		safe_handle_mutex(&forks[i], DESTROY);

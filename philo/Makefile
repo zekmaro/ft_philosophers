@@ -1,8 +1,8 @@
 NAME	:= philo
 CC		:= cc
-CFLAGS	:= -Wextra -Wall -fsanitize=thread -g
+CFLAGS	:= -Wextra -Wall #-fsanitize=thread -g
 
-OBJDIR := obj
+OBJDIR	:= obj
 
 SRC		:=	forks.c \
 			ft_atoi.c	\
@@ -13,7 +13,6 @@ SRC		:=	forks.c \
 			ft_strlen.c \
 			ft_strncmp.c \
 			initialisation_and_parsing.c \
-			lst.c \
 			main_functionality.c \
 			monitoring.c \
 			philo_actions.c \

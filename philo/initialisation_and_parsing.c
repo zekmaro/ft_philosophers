@@ -6,7 +6,7 @@
 /*   By: anarama <anarama@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/08 22:03:36 by anarama           #+#    #+#             */
-/*   Updated: 2024/08/13 17:39:56 by anarama          ###   ########.fr       */
+/*   Updated: 2024/08/19 15:43:49 by anarama          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,11 +42,8 @@ void	initialise_memory(pthread_t **threads, t_philo **philos,
 				t_data *data, pthread_mutex_t **forks)
 {
 	save_calloc((void **)threads, data->num_of_philos, sizeof(pthread_t));
-	// lst_memory((void *)threads, free, ADD);
 	save_calloc((void **)philos, data->num_of_philos, sizeof(t_philo));
-	// lst_memory((void *)philos, free, ADD);
 	save_calloc((void **)forks, data->num_of_philos, sizeof(pthread_mutex_t));
-	// lst_memory((void *)forks, free, ADD);
 	safe_handle_mutex(&data->print_mutex, INIT);
 	safe_handle_mutex(&data->stop_mutex, INIT);
 }

@@ -6,7 +6,7 @@
 /*   By: anarama <anarama@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 23:39:10 by andrejarama       #+#    #+#             */
-/*   Updated: 2024/08/13 17:40:13 by anarama          ###   ########.fr       */
+/*   Updated: 2024/08/19 16:06:34 by anarama          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,8 @@ int	main(int argc, char **argv)
 	ft_memset(&data, 0, sizeof(data));
 	initialise_data(&data, argc, argv);
 	initialise_memory(&threads, &philos, &data, &forks);
-	//print_input_info(&data);
 	start_simulation(threads, philos, &data, forks);
 	free(philos);
 	free(threads);
 	free(forks);
-	// lst_memory(NULL, NULL, CLEAN);
 }

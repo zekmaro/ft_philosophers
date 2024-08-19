@@ -6,7 +6,7 @@
 /*   By: anarama <anarama@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/08 22:14:11 by anarama           #+#    #+#             */
-/*   Updated: 2024/08/13 17:40:09 by anarama          ###   ########.fr       */
+/*   Updated: 2024/08/19 15:39:28 by anarama          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ void	handle_single_philo(t_philo	*philo, int	left_fork)
 		pick_up_left_fork(philo, left_fork);
 		usleep(philo->data->time_to_die * 1000);
 		update_time_since_last_meal(philo);
-		//philo->timestamp += philo->data->time_to_die;
 	}
 }
 
@@ -60,7 +59,7 @@ void	*philo_lifecycle(void *arg)
 		put_down_left_fork(philo, left_fork);
 		philo_sleep(philo);
 		if (save_get_value(&philo->data->stop_mutex,
-					&philo->data->stop_simulation) == 1)
+				&philo->data->stop_simulation) == 1)
 			break ;
 	}
 	return (NULL);
