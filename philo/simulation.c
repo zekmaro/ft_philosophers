@@ -6,7 +6,7 @@
 /*   By: anarama <anarama@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/08 22:14:11 by anarama           #+#    #+#             */
-/*   Updated: 2024/08/19 15:39:28 by anarama          ###   ########.fr       */
+/*   Updated: 2024/08/20 17:32:16 by anarama          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,14 +27,17 @@ void	wait_for_all_philos(t_philo	*philo)
 	}
 }
 
-void	handle_single_philo(t_philo	*philo, int	left_fork)
+int	handle_single_philo(t_philo	*philo, int	left_fork)
 {
 	if (philo->data->num_of_philos == 1)
 	{
 		pick_up_left_fork(philo, left_fork);
 		usleep(philo->data->time_to_die * 1000);
+		put_down_left_fork(philo, left_fork);
 		update_time_since_last_meal(philo);
+		return (1);
 	}
+	return (0);
 }
 
 void	*philo_lifecycle(void *arg)
@@ -47,10 +50,11 @@ void	*philo_lifecycle(void *arg)
 	left_fork = philo->philo_index - 1;
 	right_fork = philo->philo_index % philo->data->num_of_philos;
 	save_set_value(&philo->data->stop_mutex, &philo->is_ready, 1);
-	wait_for_all_philos(philo);
+	//wait_for_all_philos(philo);
 	get_current_time(&philo->time0);
 	philo->simulation_start = philo->time0;
-	handle_single_philo(philo, left_fork);
+	if (handle_single_philo(philo, left_fork) == 1)
+		return (NULL);
 	while (1)
 	{
 		get_two_forks(philo, left_fork, right_fork);

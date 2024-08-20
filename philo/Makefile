@@ -1,6 +1,6 @@
 NAME	:= philo
 CC		:= cc
-CFLAGS	:= -Wextra -Wall #-fsanitize=thread -g
+CFLAGS	:= -Wextra -Wall -Wextra -g  #-fsanitize=thread
 
 OBJDIR	:= obj
 

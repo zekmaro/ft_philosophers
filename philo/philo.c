@@ -6,7 +6,7 @@
 /*   By: anarama <anarama@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 23:39:10 by andrejarama       #+#    #+#             */
-/*   Updated: 2024/08/19 16:06:34 by anarama          ###   ########.fr       */
+/*   Updated: 2024/08/20 17:34:01 by anarama          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	main(int argc, char **argv)
 	t_philo			*philos = NULL;
 	t_data			data;
 
-	if (argc < 4 || argc > 6)
+	if (argc < 5 || argc > 6)
 	{
 		exit(EXIT_FAILURE);
 	}

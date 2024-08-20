@@ -6,7 +6,7 @@
 /*   By: anarama <anarama@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 15:14:53 by anarama           #+#    #+#             */
-/*   Updated: 2024/08/19 17:53:04 by anarama          ###   ########.fr       */
+/*   Updated: 2024/08/20 17:32:20 by anarama          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,8 +77,8 @@ int	monitor(t_philo *philos)
 			i++;
 		}
 		if (num_full_philos == philos->data->num_of_philos)
-			break ;
-		//usleep(10);
+			return (1);
+		usleep(10);
 	}
 	return (0);
 }
@@ -88,7 +88,7 @@ void	*monitor_philos(void *arg)
 	t_philo *philos;
 
 	philos = (t_philo *)arg;
-	wait_philos(philos);
+	//wait_philos(philos);
 	save_set_value(&philos->data->stop_mutex,
 		&philos->data->all_philos_ready, 1);
 	if (monitor(philos))

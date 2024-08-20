@@ -6,7 +6,7 @@
 /*   By: anarama <anarama@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 23:45:32 by andrejarama       #+#    #+#             */
-/*   Updated: 2024/08/19 16:29:56 by anarama          ###   ########.fr       */
+/*   Updated: 2024/08/20 15:15:33 by anarama          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,7 +124,6 @@ int		save_get_value(pthread_mutex_t *mutex, int *value);
 
 void	*monitor_philos(void *arg);
 
-void	lst_memory(void *mem, void (*del)(void *c), int mode);
-
 void	update_time_since_last_meal(t_philo *philo);
+void	custom_usleep(t_philo *philo, int sleep_chunck, int	sleep_time);
 #endif // PHILO_H
