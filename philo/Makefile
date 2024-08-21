@@ -1,6 +1,6 @@
 NAME	:= philo
 CC		:= cc
-CFLAGS	:= -Wextra -Wall -Wextra -g  #-fsanitize=thread
+CFLAGS	:= -Wextra -Wall -Wextra -g #-fsanitize=thread
 
 OBJDIR	:= obj
 
@@ -19,27 +19,23 @@ SRC		:=	forks.c \
 			philo.c	\
 			printing.c \
 			protections.c \
-			save_get_and_set.c \
+			safe_get_and_set.c \
 			simulation.c \
 			utils.c
 
 OBJ		:= $(SRC:%.c=$(OBJDIR)/%.o)
-LIBS	:= ft_printf/libftprintf.a 
 
 $(shell mkdir -p $(OBJDIR))
 
 all:	$(NAME)
 
 $(NAME): $(OBJ) philo.h
-	make -C ft_printf all
 	$(CC) $(OBJ) $(CFLAGS) $(LIBS) -o $(NAME)
 
 clean:
-	make -C ft_printf clean
 	rm -f $(OBJ)
 
 fclean:
-	make -C ft_printf fclean
 	rm -f $(OBJ) $(NAME)
 
 re: fclean all

@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memset.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: andrejarama <andrejarama@student.42.fr>    +#+  +:+       +#+        */
+/*   By: anarama <anarama@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 15:31:40 by anarama           #+#    #+#             */
-/*   Updated: 2024/07/06 23:45:14 by andrejarama      ###   ########.fr       */
+/*   Updated: 2024/08/20 17:39:39 by anarama          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include <stddef.h>
+#include <stddef.h>
 
 void	*ft_memset(void *str, int c, size_t n)
 {

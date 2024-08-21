@@ -6,12 +6,12 @@
 /*   By: anarama <anarama@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 23:45:32 by andrejarama       #+#    #+#             */
-/*   Updated: 2024/08/20 15:15:33 by anarama          ###   ########.fr       */
+/*   Updated: 2024/08/21 17:45:28 by anarama          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PHILO_H
-#define PHILO_H
+# define PHILO_H
 
 # include <stddef.h>
 # include <stdlib.h>
@@ -21,8 +21,9 @@
 # include <sys/time.h>
 # include <stdio.h>
 # include <stdbool.h>
-# include "ft_printf/ft_printf.h"
-
+# include <stdio.h>
+# include <stdint.h>
+# include <unistd.h>
 
 typedef enum s_mode_mutex
 {
@@ -85,45 +86,44 @@ void	put_down_right_fork(t_philo *philo, int right_fork);
 
 /* Philo_actions */
 void	philo_dead(t_philo *philo);
-int	check_dead(t_philo *philo);
 void	philo_sleep(t_philo *philo);
 void	philo_think(t_philo *philo);
 void	philo_eat(t_philo *philo);
+int		check_dead(t_philo *philo);
 
 /* Printing */
 void	print_input_info(t_data *data);
-void	save_print_action(t_philo *philo, const char *str);
-
-void	stop_simulation();
-void 	get_current_time(struct timeval *time);
+void	safe_print_action(t_philo *philo, const char *str);
+void	get_current_time(struct timeval *time);
 long	get_elapsed_time(struct timeval *start, struct timeval *end);
 
 /* Protections */
 void	print_error(char *str);
-void	safe_handle_mutex(pthread_mutex_t *mutex, t_mode_mutex mode);
-void	safe_handle_thread(pthread_t *thread, void *(*start_routine) (void *),
-				void *arg, t_mode_thread mode);
+int		safe_handle_mutex(pthread_mutex_t *mutex, t_mode_mutex mode);
+int		safe_handle_thread(pthread_t *thread, void *(*start_routine) (void *),
+			void *arg, t_mode_thread mode);
 
 /* Initialisations */
-void	initialise_mutexes(t_data *data, pthread_mutex_t *forks);
-void	create_threads(t_data *data, t_philo *philos,
+int		initialise_mutexes(t_data *data, pthread_mutex_t *forks);
+int		create_threads(t_data *data, t_philo *philos,
 			pthread_t *threads, pthread_mutex_t *forks);
-void	join_threads(t_data *data, pthread_t *threads);
-void	destroy_mutexes(t_data *data, pthread_mutex_t *forks);
+int		join_threads(t_data *data, pthread_t *threads);
+int		destroy_mutexes(t_data *data, pthread_mutex_t *forks);
 
 /* Initialisation and parsing */
 void	check_input(int	*var, char *str);
-void	initialise_memory(pthread_t **threads, t_philo **philos,
-				t_data *data, pthread_mutex_t **forks);
+int		initialise_memory(pthread_t **threads, t_philo **philos,
+			t_data *data, pthread_mutex_t **forks);
 void	initialise_data(t_data *data, int argc, char **argv);
 
-/* Save get and set */
-void	save_set_value(pthread_mutex_t *mutex, int *value, int new_value);
-int		save_get_value(pthread_mutex_t *mutex, int *value);
-
+/* safe get and set */
+void	safe_set_value(pthread_mutex_t *mutex, int *value, int new_value);
+int		safe_get_value(pthread_mutex_t *mutex, int *value);
 
 void	*monitor_philos(void *arg);
+void	delay_even_philos(t_philo *philo);
 
 void	update_time_since_last_meal(t_philo *philo);
-void	custom_usleep(t_philo *philo, int sleep_chunck, int	sleep_time);
+void	custom_usleep(t_philo *philo, int sleep_chunck, int sleep_time);
+
 #endif // PHILO_H

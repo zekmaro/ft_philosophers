@@ -1,27 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memcpy.c                                        :+:      :+:    :+:   */
+/*   save_get_and_set.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: anarama <anarama@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/19 10:14:32 by anarama           #+#    #+#             */
-/*   Updated: 2024/05/23 21:24:03 by anarama          ###   ########.fr       */
+/*   Created: 2024/08/08 19:02:37 by anarama           #+#    #+#             */
+/*   Updated: 2024/08/21 14:20:02 by anarama          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "philo.h"
 
-void	*ft_memcpy_prf(void *dest, const void *src, size_t n)
+int	safe_get_value(pthread_mutex_t *mutex, int *value)
 {
-	char	*temp_dest;
-	char	*temp_src;
+	int	temp;
 
-	if (dest == NULL && src == NULL)
-		return (NULL);
-	temp_dest = (char *)dest;
-	temp_src = (char *)src;
-	while (n--)
-		*temp_dest++ = *temp_src++;
-	return (dest);
+	safe_handle_mutex(mutex, LOCK);
+	temp = *value;
+	safe_handle_mutex(mutex, UNLOCK);
+	return (temp);
+}
+
+void	safe_set_value(pthread_mutex_t *mutex, int *value, int new_value)
+{
+	safe_handle_mutex(mutex, LOCK);
+	*value = new_value;
+	safe_handle_mutex(mutex, UNLOCK);
 }

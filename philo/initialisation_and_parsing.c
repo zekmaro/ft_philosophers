@@ -6,20 +6,21 @@
 /*   By: anarama <anarama@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/08 22:03:36 by anarama           #+#    #+#             */
-/*   Updated: 2024/08/19 15:43:49 by anarama          ###   ########.fr       */
+/*   Updated: 2024/08/21 17:42:07 by anarama          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-static void	save_calloc(void **ptr, int num, int size)
+static int	safe_calloc(void **ptr, int num, int size)
 {
 	*ptr = ft_calloc(num, size);
 	if (!*ptr)
 	{
 		print_error("Error allocating memory");
-		exit(EXIT_FAILURE);
+		return (0);
 	}
+	return (1);
 }
 
 void	check_input(int	*var, char *str)
@@ -38,14 +39,20 @@ void	check_input(int	*var, char *str)
 	*var = num;
 }
 
-void	initialise_memory(pthread_t **threads, t_philo **philos,
+int	initialise_memory(pthread_t **threads, t_philo **philos,
 				t_data *data, pthread_mutex_t **forks)
 {
-	save_calloc((void **)threads, data->num_of_philos, sizeof(pthread_t));
-	save_calloc((void **)philos, data->num_of_philos, sizeof(t_philo));
-	save_calloc((void **)forks, data->num_of_philos, sizeof(pthread_mutex_t));
-	safe_handle_mutex(&data->print_mutex, INIT);
-	safe_handle_mutex(&data->stop_mutex, INIT);
+	if (!safe_calloc((void **)threads,
+			data->num_of_philos, sizeof(pthread_t))
+		|| !safe_calloc((void **)philos,
+			data->num_of_philos, sizeof(t_philo))
+		|| !safe_calloc((void **)forks,
+			data->num_of_philos, sizeof(pthread_mutex_t)))
+		return (0);
+	if (!safe_handle_mutex(&data->print_mutex, INIT)
+		|| !safe_handle_mutex(&data->stop_mutex, INIT))
+		return (0);
+	return (1);
 }
 
 void	initialise_data(t_data *data, int argc, char **argv)
