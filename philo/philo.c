@@ -6,7 +6,7 @@
 /*   By: anarama <anarama@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 23:39:10 by andrejarama       #+#    #+#             */
-/*   Updated: 2024/08/21 18:50:42 by anarama          ###   ########.fr       */
+/*   Updated: 2024/08/23 17:47:50 by anarama          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,10 @@ int	main(int argc, char **argv)
 	if (check_invalid_data(data))
 		return (EXIT_FAILURE);
 	if (initialise_memory(&threads, &philos, &data, &forks))
+	{
+		define_chuncks(&data);
 		start_simulation(threads, philos, &data, forks);
+	}
 	free(philos);
 	free(threads);
 	free(forks);

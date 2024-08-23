@@ -6,7 +6,7 @@
 /*   By: anarama <anarama@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 23:45:32 by andrejarama       #+#    #+#             */
-/*   Updated: 2024/08/21 17:45:28 by anarama          ###   ########.fr       */
+/*   Updated: 2024/08/23 17:47:59 by anarama          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,8 @@ typedef struct s_data
 	int				time_to_eat;
 	int				time_to_sleep;
 	int				num_meals;
+	int				eat_chunck;
+	int				sleep_chunck;
 }	t_data;
 
 typedef struct s_philo
@@ -125,5 +127,6 @@ void	delay_even_philos(t_philo *philo);
 
 void	update_time_since_last_meal(t_philo *philo);
 void	custom_usleep(t_philo *philo, int sleep_chunck, int sleep_time);
+void	define_chuncks(t_data *data);
 
 #endif // PHILO_H
