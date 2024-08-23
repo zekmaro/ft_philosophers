@@ -6,7 +6,7 @@
 /*   By: anarama <anarama@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 15:14:53 by anarama           #+#    #+#             */
-/*   Updated: 2024/08/21 17:46:47 by anarama          ###   ########.fr       */
+/*   Updated: 2024/08/23 13:41:24 by anarama          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,9 @@ int	check_dead(t_philo *philo)
 {
 	if (safe_get_value(&philo->data->stop_mutex,
 			&philo->time_since_last_meal)
-		>= philo->data->time_to_die)
+		>= philo->data->time_to_die
+		|| safe_get_value(&philo->data->stop_mutex,
+			&philo->data->stop_simulation) == 1)
 	{
 		philo_dead(philo);
 		return (1);
